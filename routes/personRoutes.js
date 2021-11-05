@@ -11,6 +11,24 @@ router.get("/", async (req, res) => {
     } 
 });
 
+router.get("/:id", async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const person = await Person.findOne({_id: id});
+
+        if(!person) {
+            res.status(422).json({message: "O usuário não foi encontrado"});
+            return false;
+        }
+
+        res.status(200).json(person);
+    }
+    catch (error) {
+        res.status(500).json({error: error});
+    }
+});
+
 router.post("/", async (req, res) => {
     const {name, age, salary, approved} = req.body;
 
