@@ -1,6 +1,16 @@
 const Person = require("../models/Person");
 const router = require("express").Router();
 
+router.get("/", async (req, res) => {
+    try {
+        const people = await Person.find();
+        res.status(200).json(people);
+    }
+    catch (error) {
+        res.status(500).json({error: error})
+    } 
+});
+
 router.post("/", async (req, res) => {
     const {name, age, salary, approved} = req.body;
 
